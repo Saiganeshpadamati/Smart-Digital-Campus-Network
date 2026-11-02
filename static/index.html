@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Digital Campus Network | GNS3 Lab &amp; AI Telemetry</title>
+  <meta name="description" content="A comprehensive enterprise redesign of a 5,000-student smart campus network featuring dual-core HSRP redundancy, zero-trust VLAN isolation, live GNS3 simulation, and AI-powered threat detection.">
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Site Header & Sticky Navbar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fas fa-network-wired"></i>
+        </div>
+        <span>SMART CAMPUS <span style="color: var(--color-primary-light);">NET</span></span>
+        <span class="brand-badge">GNS3 LAB</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#problem-solution" class="nav-link">Overview</a></li>
+          <li><a href="#topology" class="nav-link">Topology</a></li>
+          <li><a href="#live-status" class="nav-link" style="color: #38bdf8;"><i class="fas fa-satellite-dish"></i> Live Lab</a></li>
+          <li><a href="#vlans" class="nav-link">VLANs &amp; IPs</a></li>
+          <li><a href="#security" class="nav-link">Security ACLs</a></li>
+          <li><a href="#redundancy" class="nav-link">High Availability</a></li>
+          <li><a href="#verification" class="nav-link">Verification</a></li>
+          <li><a href="#ai-threat-detection" class="nav-link" style="color: #67e8f9;"><i class="fas fa-shield-virus"></i> AI Threat Lab</a></li>
+          <li><a href="#ai-assistant" class="nav-link" style="color: #c084fc;"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          <li><a href="#budget" class="nav-link">Budget</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#live-status" class="btn btn-sm btn-primary">
+          <i class="fas fa-server"></i> Lab Status
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section 1: Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span class="pulse-dot"></span>
+          <span>Enterprise Campus Redesign &bull; 5,000 Concurrent Students</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Smart Digital <br>
+          <span class="gradient-text">Campus Network</span>
+        </h1>
+        
+        <p class="hero-desc">
+          A high-performance, fault-tolerant network redesign for 5,000 students supporting smart classrooms, AI surveillance cameras, IoT labs, online exams, ERP databases, and campus-wide Wi-Fi 6. Simulated in GNS3 with sub-second HSRP failover, zero-trust VLAN isolation, and real-time AI threat detection.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#topology" class="btn btn-primary">
+            <i class="fas fa-project-diagram"></i> View Topology
+          </a>
+          <a href="#live-status" class="btn btn-ai">
+            <i class="fas fa-satellite-dish"></i> Live Lab Status
+          </a>
+          <a href="SmartCampus_Full.gns3project" download class="btn btn-outline" id="downloadGns3Btn">
+            <i class="fas fa-download"></i> Download GNS3 Project
+          </a>
+          <a href="https://www.gns3.com" target="_blank" rel="noopener" class="btn btn-outline">
+            <i class="fas fa-external-link-alt"></i> GNS3 Official Site
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">7</span>
+            <span class="stat-label">Isolated VLANs</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">&lt;1.5s</span>
+            <span class="stat-label">HSRP Failover</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">5,000</span>
+            <span class="stat-label">User Capacity</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Exam Isolation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Card -->
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="card-header-bar">
+            <div class="terminal-dots">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+            </div>
+            <div class="live-badge" id="heroLiveBadge">
+              <span class="pulse-dot"></span> SIMULATION ACTIVE
+            </div>
+          </div>
+
+          <div class="hero-preview-list">
+            <div class="preview-row">
+              <span style="color:var(--text-secondary);"><i class="fas fa-server"></i> Active Core Gateways</span>
+              <span style="color:var(--status-normal);">Core1 / Core2 (HSRP VIP .1)</span>
+            </div>
+            <div class="preview-row">
+              <span style="color:var(--text-secondary);"><i class="fas fa-lock"></i> Exam Subnet Security</span>
+              <span style="color:#fcd34d;">Air-Gapped (10.70.0.12 only)</span>
+            </div>
+            <div class="preview-row">
+              <span style="color:var(--text-secondary);"><i class="fas fa-video"></i> CCTV / AI Surveillance</span>
+              <span style="color:#67e8f9;">Local NVR (WAN Denied)</span>
+            </div>
+            <div class="preview-row">
+              <span style="color:var(--text-secondary);"><i class="fas fa-shield-alt"></i> Threat Mitigation</span>
+              <span style="color:#c084fc;">Z-Score &amp; Dynamic ACLs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Problem & Solution -->
+  <section class="section section-alt" id="problem-solution">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-tools"></i> Architecture Evolution</span>
+        <h2 class="section-title">Problem &amp; Solution Matrix</h2>
+        <p class="section-subtitle">
+          How our redesigned architecture resolves legacy campus infrastructure bottlenecks, security vulnerabilities, and single points of failure.
+        </p>
+      </div>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Legacy Campus Problem</th>
+              <th style="width: 35%;">Underlying Root Cause</th>
+              <th style="width: 40%;">Our Engineering Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="problem-badge">
+                  <i class="fas fa-wifi-slash"></i> Slow Internet &amp; Congestion
+                </div>
+              </td>
+              <td class="cause-text">
+                Single flat /16 network with uncontrolled broadcast domains, ARP storms, and no bandwidth prioritization.
+              </td>
+              <td>
+                <div class="solution-badge">
+                  <i class="fas fa-check-circle"></i> Segmented 802.1Q VLANs + Dedicated Student /20 Subnet
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  Isolated broadcast domains, rate limiting, and prioritized QoS for critical ERP &amp; Exam traffic.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="problem-badge">
+                  <i class="fas fa-user-shield"></i> Unauthorized Admin &amp; Exam Access
+                </div>
+              </td>
+              <td class="cause-text">
+                Unrestricted inter-subnet routing allowed any student laptop to probe finance servers, ERP databases, and exam test banks.
+              </td>
+              <td>
+                <div class="solution-badge">
+                  <i class="fas fa-check-circle"></i> Strict Zero-Trust ACLs &amp; Air-Gapped Exam Zone
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  VLAN 50 (Exam) locked strictly to Exam-Server (10.70.0.12) with zero WAN access; Student VLAN blocked from Admin VLAN 20.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="problem-badge">
+                  <i class="fas fa-bolt"></i> Frequent Campus-Wide Outages
+                </div>
+              </td>
+              <td class="cause-text">
+                Single core switch with no redundancy. Hardware reboots or link cuts immediately severed all campus services.
+              </td>
+              <td>
+                <div class="solution-badge">
+                  <i class="fas fa-check-circle"></i> Dual-Core HSRP/VRRP &amp; OSPF Multi-Area Redundancy
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  Active-Active dual core routers (Core1 &amp; Core2) with virtual .1 gateways and sub-1.5s automatic failover.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="problem-badge">
+                  <i class="fas fa-virus"></i> IoT &amp; Camera Cyberattacks
+                </div>
+              </td>
+              <td class="cause-text">
+                Unsecured IoT sensors and IP cameras connected directly to the open campus LAN, exposing them to botnet infections.
+              </td>
+              <td>
+                <div class="solution-badge">
+                  <i class="fas fa-check-circle"></i> Isolated IoT / CCTV VLANs + AI Threat Telemetry
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  VLAN 60 cameras blocked from WAN; AI telemetry detects volumetric floods and port scans instantly.
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Interactive Topology Diagram (SVG) -->
+  <section class="section" id="topology">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-sitemap"></i> Network Architecture</span>
+        <h2 class="section-title">Interactive GNS3 Topology Diagram</h2>
+        <p class="section-subtitle">
+          Click any device node to inspect its role, IP configuration, VLAN assignments, and Cisco IOS CLI commands.
+        </p>
+      </div>
+
+      <div class="topology-layout">
+        <!-- SVG Canvas Card -->
+        <div class="topology-canvas-card">
+          <div class="topology-controls">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-size: 0.85rem; color: var(--text-secondary);">Interactive Topology Map</span>
+              <span class="badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-family: var(--font-mono);">Click Node to Inspect</span>
+            </div>
+            
+            <div style="display: flex; gap: 0.5rem;">
+              <button id="toggleFailoverAnimBtn" class="btn btn-sm btn-outline">
+                <i class="fas fa-random"></i> Test Core1 Failover
+              </button>
+              <button id="resetTopologyBtn" class="btn btn-sm btn-outline">
+                <i class="fas fa-redo"></i> Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="svg-container">
+            <svg id="networkTopologySvg" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="linkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#818cf8" stop-opacity="0.7"/>
+                </linearGradient>
+                <linearGradient id="wanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0284c7"/>
+                  <stop offset="100%" stop-color="#0369a1"/>
+                </linearGradient>
+                <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1e3a8a"/>
+                  <stop offset="100%" stop-color="#172554"/>
+                </linearGradient>
+                <linearGradient id="switchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0f766e"/>
+                  <stop offset="100%" stop-color="#134e4a"/>
+                </linearGradient>
+                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
+              <!-- Connection Links -->
+              <!-- Internet to Edge -->
+              <line id="link-internet-edge" x1="500" y1="45" x2="500" y2="110" stroke="#38bdf8" stroke-width="3" stroke-dasharray="none"/>
+              
+              <!-- Edge to Core1 & Core2 -->
+              <line id="link-edge-core1" x1="500" y1="125" x2="350" y2="200" stroke="#38bdf8" stroke-width="2.5"/>
+              <line id="link-edge-core2" x1="500" y1="125" x2="650" y2="200" stroke="#38bdf8" stroke-width="2.5"/>
+              
+              <!-- Core1 to Core2 (Dual 10G Interconnect) -->
+              <line id="link-core-cross" x1="375" y1="200" x2="625" y2="200" stroke="#818cf8" stroke-width="3" stroke-dasharray="5,3"/>
+              
+              <!-- Core1 and Core2 to Dist Switch -->
+              <line id="link-core1-dist" x1="350" y1="220" x2="500" y2="300" stroke="#38bdf8" stroke-width="2.5"/>
+              <line id="link-core2-dist" x1="650" y1="220" x2="500" y2="300" stroke="#38bdf8" stroke-width="2.5"/>
+              
+              <!-- Dist Switch to Access Switches -->
+              <line id="link-dist-bldg1" x1="500" y1="315" x2="220" y2="400" stroke="#38bdf8" stroke-width="2"/>
+              <line id="link-dist-bldg2" x1="500" y1="315" x2="500" y2="400" stroke="#38bdf8" stroke-width="2"/>
+              <line id="link-dist-servers" x1="500" y1="315" x2="780" y2="400" stroke="#38bdf8" stroke-width="2"/>
+
+              <!-- Access Switches to End Devices -->
+              <!-- Bldg1 to PCs -->
+              <line x1="220" y1="415" x2="160" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              <line x1="220" y1="415" x2="280" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              
+              <!-- Bldg2 to Devices -->
+              <line x1="500" y1="415" x2="420" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              <line x1="500" y1="415" x2="500" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              <line x1="500" y1="415" x2="580" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+
+              <!-- Servers Switch to End Servers -->
+              <line x1="780" y1="415" x2="700" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              <line x1="780" y1="415" x2="780" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+              <line x1="780" y1="415" x2="860" y2="500" stroke="rgba(148, 163, 184, 0.4)" stroke-width="1.5"/>
+
+              <!-- SVG Animated Packet Particle (Failover indicator) -->
+              <circle id="packetParticle" cx="500" cy="125" r="5" fill="#38bdf8" filter="url(#glow)" style="display:none;"/>
+
+              <!-- Device Nodes -->
+              <!-- 1. WAN / Internet -->
+              <g class="topo-node" id="node-internet" onclick="window.selectDevice('internet')">
+                <rect x="440" y="15" width="120" height="40" rx="20" fill="url(#wanGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="500" y="40" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle" font-family="'Outfit', sans-serif">☁ WAN / ISP</text>
+                <circle id="status-ring-internet" cx="545" cy="23" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 2. Edge-Router -->
+              <g class="topo-node" id="node-edge" onclick="window.selectDevice('edge-router')">
+                <circle cx="500" cy="120" r="24" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="500" y="125" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">EDGE</text>
+                <text x="500" y="156" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="'JetBrains Mono'">Edge-Router</text>
+                <circle id="status-ring-edge" cx="518" cy="104" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 3. Core1-Router (Active for 10,20,40,60) -->
+              <g class="topo-node" id="node-core1" onclick="window.selectDevice('core1')">
+                <rect x="300" y="180" width="95" height="45" rx="8" fill="url(#coreGrad)" stroke="#38bdf8" stroke-width="2"/>
+                <text x="347" y="202" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Core1</text>
+                <text x="347" y="216" fill="#38bdf8" font-size="9" text-anchor="middle" font-family="'JetBrains Mono'">HSRP Priority 110</text>
+                <text x="347" y="240" fill="#94a3b8" font-size="10" text-anchor="middle">Active: 10,20,40,60</text>
+                <circle id="status-ring-core1" cx="385" cy="188" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 4. Core2-Router (Active for 30,50,70) -->
+              <g class="topo-node" id="node-core2" onclick="window.selectDevice('core2')">
+                <rect x="605" y="180" width="95" height="45" rx="8" fill="url(#coreGrad)" stroke="#818cf8" stroke-width="2"/>
+                <text x="652" y="202" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Core2</text>
+                <text x="652" y="216" fill="#818cf8" font-size="9" text-anchor="middle" font-family="'JetBrains Mono'">HSRP Priority 110</text>
+                <text x="652" y="240" fill="#94a3b8" font-size="10" text-anchor="middle">Active: 30,50,70</text>
+                <circle id="status-ring-core2" cx="690" cy="188" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 5. SW-Dist (Distribution Switch) -->
+              <g class="topo-node" id="node-dist" onclick="window.selectDevice('sw-dist')">
+                <rect x="450" y="295" width="100" height="35" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+                <text x="500" y="317" fill="#06b6d4" font-size="11" font-weight="bold" text-anchor="middle">SW-Dist (10G)</text>
+                <circle id="status-ring-dist" cx="540" cy="302" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 6. Access Switches -->
+              <!-- SW-Bldg1 -->
+              <g class="topo-node" id="node-bldg1" onclick="window.selectDevice('sw-bldg1')">
+                <rect x="175" y="390" width="90" height="32" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="220" y="410" fill="#f8fafc" font-size="10" font-weight="600" text-anchor="middle">SW-Bldg1</text>
+                <text x="220" y="434" fill="#94a3b8" font-size="9" text-anchor="middle">VLAN 10, 20</text>
+                <circle id="status-ring-bldg1" cx="255" cy="396" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- SW-Bldg2 -->
+              <g class="topo-node" id="node-bldg2" onclick="window.selectDevice('sw-bldg2')">
+                <rect x="455" y="390" width="90" height="32" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="500" y="410" fill="#f8fafc" font-size="10" font-weight="600" text-anchor="middle">SW-Bldg2</text>
+                <text x="500" y="434" fill="#94a3b8" font-size="9" text-anchor="middle">VLAN 30, 40, 60</text>
+                <circle id="status-ring-bldg2" cx="535" cy="396" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- SW-Servers -->
+              <g class="topo-node" id="node-servers" onclick="window.selectDevice('sw-servers')">
+                <rect x="735" y="390" width="90" height="32" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="780" y="410" fill="#f8fafc" font-size="10" font-weight="600" text-anchor="middle">SW-Servers</text>
+                <text x="780" y="434" fill="#94a3b8" font-size="9" text-anchor="middle">VLAN 50, 70</text>
+                <circle id="status-ring-servers" cx="815" cy="396" r="4" fill="#10b981"/>
+              </g>
+
+              <!-- 7. End Devices & Servers -->
+              <!-- PC-Academic (VLAN 10) -->
+              <g class="topo-node" id="node-host-academic" onclick="window.selectDevice('host-academic')">
+                <circle cx="160" cy="510" r="16" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="160" y="514" fill="#38bdf8" font-size="9" font-weight="bold" text-anchor="middle">V10</text>
+                <text x="160" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">Academic</text>
+                <circle id="status-ring-academic" cx="172" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- PC-Admin (VLAN 20) -->
+              <g class="topo-node" id="node-host-admin" onclick="window.selectDevice('host-admin')">
+                <circle cx="280" cy="510" r="16" fill="#0f172a" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="280" y="514" fill="#c084fc" font-size="9" font-weight="bold" text-anchor="middle">V20</text>
+                <text x="280" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">Admin/ERP</text>
+                <circle id="status-ring-admin" cx="292" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- PC-Student (VLAN 30) -->
+              <g class="topo-node" id="node-host-student" onclick="window.selectDevice('host-student')">
+                <circle cx="420" cy="510" r="16" fill="#0f172a" stroke="#34d399" stroke-width="1.5"/>
+                <text x="420" y="514" fill="#34d399" font-size="9" font-weight="bold" text-anchor="middle">V30</text>
+                <text x="420" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">Student Wi-Fi</text>
+                <circle id="status-ring-student" cx="432" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- IoT-Sensor (VLAN 40) -->
+              <g class="topo-node" id="node-host-iot" onclick="window.selectDevice('host-iot')">
+                <circle cx="500" cy="510" r="16" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+                <text x="500" y="514" fill="#fbbf24" font-size="9" font-weight="bold" text-anchor="middle">V40</text>
+                <text x="500" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">IoT Labs</text>
+                <circle id="status-ring-iot" cx="512" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- CCTV-AI (VLAN 60) -->
+              <g class="topo-node" id="node-host-cctv" onclick="window.selectDevice('host-cctv')">
+                <circle cx="580" cy="510" r="16" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
+                <text x="580" y="514" fill="#22d3ee" font-size="9" font-weight="bold" text-anchor="middle">V60</text>
+                <text x="580" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">CCTV / AI</text>
+                <circle id="status-ring-cctv" cx="592" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- PC-Exam (VLAN 50) -->
+              <g class="topo-node" id="node-host-exam" onclick="window.selectDevice('host-exam')">
+                <circle cx="700" cy="510" r="16" fill="#0f172a" stroke="#f87171" stroke-width="1.5"/>
+                <text x="700" y="514" fill="#f87171" font-size="9" font-weight="bold" text-anchor="middle">V50</text>
+                <text x="700" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">Exam PC</text>
+                <circle id="status-ring-exam" cx="712" cy="498" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- Server-Web (VLAN 70) -->
+              <g class="topo-node" id="node-host-server-web" onclick="window.selectDevice('server-web')">
+                <rect x="760" y="495" width="40" height="30" rx="4" fill="#0f172a" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="780" y="514" fill="#818cf8" font-size="8.5" font-weight="bold" text-anchor="middle">WEB</text>
+                <text x="780" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">Web/LMS</text>
+                <circle id="status-ring-web" cx="794" cy="499" r="3.5" fill="#10b981"/>
+              </g>
+
+              <!-- Server-Exam (VLAN 70) -->
+              <g class="topo-node" id="node-host-server-exam" onclick="window.selectDevice('server-exam')">
+                <rect x="840" y="495" width="40" height="30" rx="4" fill="#0f172a" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="860" y="514" fill="#818cf8" font-size="8.5" font-weight="bold" text-anchor="middle">EXAM</text>
+                <text x="860" y="538" fill="#94a3b8" font-size="9" text-anchor="middle">10.70.0.12</text>
+                <circle id="status-ring-exsrv" cx="874" cy="499" r="3.5" fill="#10b981"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Topology Inspector Side Panel -->
+        <div class="inspector-card">
+          <div class="inspector-header">
+            <div class="inspector-icon" id="inspectorIcon">
+              <i class="fas fa-server"></i>
+            </div>
+            <div>
+              <h3 class="inspector-title" id="inspectorTitle">Core1-Router</h3>
+              <span class="inspector-subtitle" id="inspectorSubtitle">Cisco Catalyst 3850 (L3 Core)</span>
+            </div>
+          </div>
+
+          <div class="inspector-details">
+            <div class="inspector-row">
+              <span class="inspector-key">Device Role:</span>
+              <span class="inspector-val" id="inspectorRole">Primary L3 Gateway</span>
+            </div>
+            <div class="inspector-row">
+              <span class="inspector-key">IP Configuration:</span>
+              <span class="inspector-val" id="inspectorIp">10.10.0.2 / 10.20.0.2</span>
+            </div>
+            <div class="inspector-row">
+              <span class="inspector-key">VLANs / VIP:</span>
+              <span class="inspector-val" id="inspectorVlan">VLAN 10, 20, 40, 60 (VIP .1)</span>
+            </div>
+            <div class="inspector-row">
+              <span class="inspector-key">Active HSRP Role:</span>
+              <span class="inspector-val" id="inspectorCore" style="color: #38bdf8;">ACTIVE (Priority 110)</span>
+            </div>
+            <div class="inspector-row">
+              <span class="inspector-key">GNS3 Node Status:</span>
+              <span class="inspector-val" id="inspectorStatus" style="color: #34d399;"><i class="fas fa-check-circle"></i> ONLINE (Started)</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem; display: block;">
+              <i class="fas fa-terminal"></i> Cisco IOS Configuration
+            </label>
+            <pre class="cli-box" id="inspectorCli">interface Vlan10
+ ip address 10.10.0.2 255.255.255.0
+ standby 10 ip 10.10.0.1
+ standby 10 priority 110
+ standby 10 preempt</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Live GNS3 Status Section -->
+  <section class="section section-alt" id="live-status">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-satellite-dish"></i> Real-Time Telemetry</span>
+        <h2 class="section-title">Live GNS3 Lab Status &amp; Node Control</h2>
+        <p class="section-subtitle">
+          Real-time synchronization with the running GNS3 server API (<code style="color:var(--color-primary-light);">/v2</code>). Monitor node states, execute remote power cycles, and inspect live lab connectivity.
+        </p>
+      </div>
+
+      <!-- Connection Status Banner -->
+      <div class="gns3-status-banner gns3-banner-offline" id="gns3StatusBanner">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-exclamation-triangle" id="gns3BannerIcon" style="font-size: 1.3rem;"></i>
+          <div>
+            <strong id="gns3BannerTitle">GNS3 Server Not Reachable</strong>
+            <p style="font-size: 0.82rem; margin-top: 0.2rem;" id="gns3BannerDesc">
+              Could not connect to GNS3 at http://127.0.0.1:3080/v2. Displaying simulated standby lab state. You can still test interactive node controls in simulation mode.
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button class="btn btn-sm btn-outline" id="retryHealthBtn">
+            <i class="fas fa-sync-alt"></i> Re-check GNS3
+          </button>
+        </div>
+      </div>
+
+      <!-- GNS3 Lab Controls Bar -->
+      <div class="gns3-controls-bar">
+        <div class="gns3-project-picker">
+          <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-secondary);">
+            <i class="fas fa-folder-open"></i> GNS3 Project:
+          </label>
+          <select id="projectSelect" class="custom-select">
+            <option value="smartcampus_demo">SmartCampus_Full (Active Demo)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono);" id="pollStatusText">
+            <i class="fas fa-circle-notch fa-spin"></i> Polling every 5s
+          </span>
+          <button class="btn btn-sm btn-outline" id="refreshNodesBtn">
+            <i class="fas fa-refresh"></i> Refresh Nodes
+          </button>
+          <button class="btn btn-sm btn-primary" id="startAllNodesBtn">
+            <i class="fas fa-play"></i> Start All Nodes
+          </button>
+          <button class="btn btn-sm btn-danger-sm" id="stopAllNodesBtn">
+            <i class="fas fa-stop"></i> Stop All Nodes
+          </button>
+        </div>
+      </div>
+
+      <!-- Node Cards Grid -->
+      <div class="node-grid" id="nodeCardsGrid">
+        <!-- Node cards dynamically populated by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: VLAN and IP Table -->
+  <section class="section" id="vlans">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-layer-group"></i> Subnet Allocation</span>
+        <h2 class="section-title">Campus VLAN &amp; IP Addressing Scheme</h2>
+        <p class="section-subtitle">
+          Engineered for 5,000 users with dual-core HSRP active-standby gateway distribution and dedicated functional subnets.
+        </p>
+      </div>
+
+      <div class="vlan-card">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>VLAN</th>
+              <th>Segment Name</th>
+              <th>Subnet &amp; CIDR</th>
+              <th>Shared Virtual Gateway (VIP)</th>
+              <th>Active Core Switch</th>
+              <th>Host Capacity &amp; Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="vlan-tag tag-v10">VLAN 10</span></td>
+              <td><strong>Academic</strong></td>
+              <td><code>10.10.0.0/24</code></td>
+              <td><code>10.10.0.1</code></td>
+              <td><span style="color: #38bdf8; font-weight: 700;">Core1</span> (Core2 Standby)</td>
+              <td>254 IPs &bull; Faculty, lecture podiums, academic desktops</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v20">VLAN 20</span></td>
+              <td><strong>Admin / ERP</strong></td>
+              <td><code>10.20.0.0/24</code></td>
+              <td><code>10.20.0.1</code></td>
+              <td><span style="color: #38bdf8; font-weight: 700;">Core1</span> (Core2 Standby)</td>
+              <td>254 IPs &bull; Finance, registrar, administration workstations</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v30">VLAN 30</span></td>
+              <td><strong>Student Wi-Fi</strong></td>
+              <td><code>10.30.0.0/20</code></td>
+              <td><code>10.30.0.1</code></td>
+              <td><span style="color: #818cf8; font-weight: 700;">Core2</span> (Core1 Standby)</td>
+              <td><strong>4,094 IPs</strong> &bull; Campus BYOD, Wi-Fi 6 APs, high-density access</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v40">VLAN 40</span></td>
+              <td><strong>IoT Labs</strong></td>
+              <td><code>10.40.0.0/24</code></td>
+              <td><code>10.40.0.1</code></td>
+              <td><span style="color: #38bdf8; font-weight: 700;">Core1</span> (Core2 Standby)</td>
+              <td>254 IPs &bull; Smart energy meters, IoT sensors, robotics</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v50">VLAN 50</span></td>
+              <td><strong>Online Exam</strong></td>
+              <td><code>10.50.0.0/24</code></td>
+              <td><code>10.50.0.1</code></td>
+              <td><span style="color: #818cf8; font-weight: 700;">Core2</span> (Core1 Standby)</td>
+              <td>254 IPs &bull; Air-gapped CBT terminals locked to Exam-Server</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v60">VLAN 60</span></td>
+              <td><strong>CCTV / AI</strong></td>
+              <td><code>10.60.0.0/24</code></td>
+              <td><code>10.60.0.1</code></td>
+              <td><span style="color: #38bdf8; font-weight: 700;">Core1</span> (Core2 Standby)</td>
+              <td>254 IPs &bull; AI surveillance cameras streaming to local NVR</td>
+            </tr>
+            <tr>
+              <td><span class="vlan-tag tag-v70">VLAN 70</span></td>
+              <td><strong>Servers / DC</strong></td>
+              <td><code>10.70.0.0/24</code></td>
+              <td><code>10.70.0.1</code></td>
+              <td><span style="color: #818cf8; font-weight: 700;">Core2</span> (Core1 Standby)</td>
+              <td>254 IPs &bull; Data Center: Web (10), ERP (11), Exam (12), NVR (15)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Security Rules per VLAN -->
+  <section class="section section-alt" id="security">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-shield-alt"></i> Zero-Trust Hardening</span>
+        <h2 class="section-title">Security Policies &amp; Access Control Lists</h2>
+        <p class="section-subtitle">
+          Granular Layer 3/4 ACLs enforce least-privilege subnet isolation across student, faculty, IoT, and examination segments.
+        </p>
+      </div>
+
+      <div class="security-grid">
+        <!-- Students -->
+        <div class="security-card">
+          <div class="security-card-header">
+            <h3 class="security-title"><i class="fas fa-user-graduate" style="color: #34d399;"></i> Student Wi-Fi (VLAN 30)</h3>
+            <span class="acl-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">ACL-STUDENT-IN</span>
+          </div>
+          <ul class="acl-rules-list">
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> HTTP (80) &amp; HTTPS (443) to Server VLAN (<code>10.70.0.0/24</code>)</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> ICMP Ping to Server VLAN for diagnostic connectivity</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> Outbound Internet access through Edge NAT router</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>DENY</strong> All internal access to VLAN 10 (Academic), 20 (Admin), 40 (IoT), 50 (Exam), 60 (CCTV)</span>
+            </li>
+          </ul>
+          <pre class="cli-box">ip access-list extended ACL_STUDENTS
+ permit tcp 10.30.0.0 0.0.15.255 10.70.0.0 0.0.0.255 eq 80 443
+ permit icmp 10.30.0.0 0.0.15.255 10.70.0.0 0.0.0.255 echo
+ deny ip 10.30.0.0 0.0.15.255 10.0.0.0 0.255.255.255
+ permit ip 10.30.0.0 0.0.15.255 any</pre>
+        </div>
+
+        <!-- IoT Labs -->
+        <div class="security-card">
+          <div class="security-card-header">
+            <h3 class="security-title"><i class="fas fa-microchip" style="color: #fbbf24;"></i> IoT Labs (VLAN 40)</h3>
+            <span class="acl-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">ACL-IOT-IN</span>
+          </div>
+          <ul class="acl-rules-list">
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> HTTPS (443) &amp; MQTT (8883) telemetry to Server VLAN</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> Outbound Internet for cloud telemetry synchronization</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>DENY</strong> Direct lateral communication with Student, Admin, or Exam subnets</span>
+            </li>
+          </ul>
+          <pre class="cli-box">ip access-list extended ACL_IOT
+ permit tcp 10.40.0.0 0.0.0.255 10.70.0.0 0.0.0.255 eq 443 8883
+ deny ip 10.40.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ permit ip 10.40.0.0 0.0.0.255 any</pre>
+        </div>
+
+        <!-- CCTV / AI -->
+        <div class="security-card">
+          <div class="security-card-header">
+            <h3 class="security-title"><i class="fas fa-video" style="color: #22d3ee;"></i> CCTV / AI (VLAN 60)</h3>
+            <span class="acl-badge" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee;">AIR-GAPPED WAN</span>
+          </div>
+          <ul class="acl-rules-list">
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> RTSP / TCP streams to Campus NVR (<code>10.70.0.15</code>)</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>STRICT DENY</strong> All public Internet WAN access (zero camera botnet risk)</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>STRICT DENY</strong> All access to Student, Academic, and Admin subnets</span>
+            </li>
+          </ul>
+          <pre class="cli-box">ip access-list extended ACL_CCTV
+ permit ip 10.60.0.0 0.0.0.255 host 10.70.0.15
+ deny ip any any</pre>
+        </div>
+
+        <!-- Online Exam -->
+        <div class="security-card">
+          <div class="security-card-header">
+            <h3 class="security-title"><i class="fas fa-file-alt" style="color: #f87171;"></i> Online Exam (VLAN 50)</h3>
+            <span class="acl-badge" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">ZERO-TRUST EXAM</span>
+          </div>
+          <ul class="acl-rules-list">
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> HTTPS (443) exclusively to Exam-Server (<code>10.70.0.12</code>)</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>STRICT DENY</strong> All public Internet traffic (eliminates exam cheating/leaks)</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-times-circle rule-deny"></i>
+              <span><strong>STRICT DENY</strong> All other server, student, or admin subnets</span>
+            </li>
+          </ul>
+          <pre class="cli-box">ip access-list extended ACL_ONLINE_EXAM
+ permit tcp 10.50.0.0 0.0.0.255 host 10.70.0.12 eq 443
+ deny ip any any</pre>
+        </div>
+
+        <!-- Admin / ERP -->
+        <div class="security-card">
+          <div class="security-card-header">
+            <h3 class="security-title"><i class="fas fa-lock" style="color: #c084fc;"></i> Admin &amp; ERP (VLAN 20)</h3>
+            <span class="acl-badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">FULL ACCESS</span>
+          </div>
+          <ul class="acl-rules-list">
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> Full stateful inspection access to all internal VLANs and DC</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> SSH (22) &amp; HTTPS (443) management access to Core/Dist switches</span>
+            </li>
+            <li class="acl-rule-item">
+              <i class="fas fa-check-circle rule-permit"></i>
+              <span><strong>PERMIT</strong> Full outbound Internet WAN access</span>
+            </li>
+          </ul>
+          <pre class="cli-box">ip access-list extended ACL_ADMIN
+ permit ip 10.20.0.0 0.0.0.255 any</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Reliability & High Availability -->
+  <section class="section" id="redundancy">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-heartbeat"></i> 99.99% Uptime</span>
+        <h2 class="section-title">Reliability &amp; High Availability Architecture</h2>
+        <p class="section-subtitle">
+          Dual Cisco Catalyst 3850 Core routers running HSRP active-standby gateway load sharing, OSPF Area 0 dynamic routing, and redundant 10 Gbps uplinks.
+        </p>
+      </div>
+
+      <div class="ha-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle);">
+          <div>
+            <h3 style="font-size: 1.25rem; font-weight: 700;">HSRP / VRRP Active-Standby Distribution</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
+              Shared virtual IP addresses ending in <code style="color:var(--color-primary-light);">.1</code> ensure seamless client default gateway redundancy with &lt;1.5s automatic failover.
+            </p>
+          </div>
+          <button id="triggerHaTestBtn" class="btn btn-primary">
+            <i class="fas fa-bolt"></i> Run Live Failover Simulation
+          </button>
+        </div>
+
+        <div class="ha-grid">
+          <div class="ha-feature-box">
+            <div class="ha-feature-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Core1 Active VLANs</h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+              Active default gateway for <strong>VLAN 10 (Academic), 20 (Admin), 40 (IoT), 60 (CCTV)</strong> with HSRP Priority 110. Core2 stands by as backup (Priority 100).
+            </p>
+          </div>
+
+          <div class="ha-feature-box">
+            <div class="ha-feature-icon">
+              <i class="fas fa-server"></i>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Core2 Active VLANs</h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+              Active default gateway for <strong>VLAN 30 (Student Wi-Fi), 50 (Online Exam), 70 (Servers)</strong> with HSRP Priority 110. Core1 stands by as backup (Priority 100).
+            </p>
+          </div>
+
+          <div class="ha-feature-box">
+            <div class="ha-feature-icon">
+              <i class="fas fa-route"></i>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">OSPF Area 0 Dynamic Routing</h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+              Non-blocking OSPF Area 0 over dual cross-chassis 10 Gbps fiber links ensures sub-second route reconvergence without STP broadcast blocking.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Test Checklist Table -->
+  <section class="section section-alt" id="verification">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-clipboard-check"></i> Lab Validation</span>
+        <h2 class="section-title">Test Checklist &amp; Verification Procedures</h2>
+        <p class="section-subtitle">
+          Click "Run Test" on any validation scenario to simulate real Cisco IOS CLI test execution and inspect return status.
+        </p>
+      </div>
+
+      <div class="test-table-wrapper">
+        <table class="test-table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">Test Scenario</th>
+              <th style="width: 20%;">Source / Device</th>
+              <th style="width: 25%;">CLI Verification Command</th>
+              <th style="width: 25%;">Expected Result</th>
+              <th style="width: 10%; text-align: center;">Execute</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Student to Admin Isolation</strong></td>
+              <td>PC-Student (<code>10.30.2.10</code>)</td>
+              <td><code>ping 10.20.0.15</code></td>
+              <td><span style="color: #f87171;"><i class="fas fa-ban"></i> Destination Host Unreachable (Denied by ACL)</span></td>
+              <td style="text-align: center;">
+                <button class="btn btn-sm btn-outline" onclick="window.runLabTest('student_to_admin')">Run</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Exam WAN Leakage Test</strong></td>
+              <td>PC-Exam (<code>10.50.0.5</code>)</td>
+              <td><code>ping 8.8.8.8</code></td>
+              <td><span style="color: #f87171;"><i class="fas fa-ban"></i> Request Timed Out (Air-Gapped from Internet)</span></td>
+              <td style="text-align: center;">
+                <button class="btn btn-sm btn-outline" onclick="window.runLabTest('exam_to_wan')">Run</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Exam Server Connectivity</strong></td>
+              <td>PC-Exam (<code>10.50.0.5</code>)</td>
+              <td><code>curl -k https://10.70.0.12</code></td>
+              <td><span style="color: #34d399;"><i class="fas fa-check"></i> HTTP/200 OK (Exam Portal Loaded)</span></td>
+              <td style="text-align: center;">
+                <button class="btn btn-sm btn-outline" onclick="window.runLabTest('exam_to_server')">Run</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HSRP Active/Standby Check</strong></td>
+              <td>Core1-Router</td>
+              <td><code>show standby brief</code></td>
+              <td><span style="color: #38bdf8;"><i class="fas fa-check"></i> VLAN 10,20,40,60 Active; 30,50,70 Standby</span></td>
+              <td style="text-align: center;">
+                <button class="btn btn-sm btn-outline" onclick="window.runLabTest('hsrp_check')">Run</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>OSPF Neighbor Adjacency</strong></td>
+              <td>Core2-Router</td>
+              <td><code>show ip ospf neighbor</code></td>
+              <td><span style="color: #34d399;"><i class="fas fa-check"></i> State FULL/BDR across dual 10G links</span></td>
+              <td style="text-align: center;">
+                <button class="btn btn-sm btn-outline" onclick="window.runLabTest('ospf_check')">Run</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Test Terminal Simulation Box -->
+      <div id="testTerminalBox" style="display: none; margin-top: 1.5rem; background: #050811; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 1.25rem; font-family: var(--font-mono); font-size: 0.85rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+          <span style="color: var(--color-primary-light);" id="terminalCmdTitle"><i class="fas fa-terminal"></i> Terminal Execution</span>
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('testTerminalBox').style.display='none'">Close</button>
+        </div>
+        <pre id="terminalOutput" style="color: #a5f3fc; white-space: pre-wrap;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: AI Threat Detection Demo -->
+  <section class="section" id="ai-threat-detection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" style="color: #67e8f9;"><i class="fas fa-microchip"></i> Telemetry &amp; Anomaly Scoring</span>
+        <h2 class="section-title">AI Threat Detection Engine &amp; Forensic Lab</h2>
+        <p class="section-subtitle">
+          Continuous network flow inspection utilizing statistical Z-score volumetric anomaly detection + deterministic ACL heuristic scoring (0&ndash;100 risk).
+        </p>
+      </div>
+
+      <!-- Prominent Mandatory Disclaimer Banner -->
+      <div class="threat-disclaimer">
+        <i class="fas fa-info-circle" style="font-size: 1.4rem;"></i>
+        <span><strong>Notice:</strong> Simulated data for demonstration. Not connected to real network traffic. All telemetry flows and anomalies are generated mathematically in JavaScript for educational testing.</span>
+      </div>
+
+      <!-- Threat Telemetry Dashboard KPIs -->
+      <div class="threat-dashboard-grid">
+        <div class="threat-kpi-card">
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Total Flows Analyzed</span>
+          <div class="threat-kpi-val" id="kpiTotalFlows">0</div>
+        </div>
+        <div class="threat-kpi-card">
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Suspicious Flows</span>
+          <div class="threat-kpi-val" id="kpiSuspicious" style="color: #f87171;">0</div>
+        </div>
+        <div class="threat-kpi-card">
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Quarantined IPs</span>
+          <div class="threat-kpi-val" id="kpiBlocked" style="color: #fbbf24;">0</div>
+        </div>
+        <div class="threat-kpi-card">
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Avg Anomaly Risk</span>
+          <div class="threat-kpi-val" id="kpiAvgRisk" style="color: #38bdf8;">0%</div>
+        </div>
+      </div>
+
+      <!-- Threat Telemetry Layout -->
+      <div class="threat-layout">
+        <!-- Telemetry Flow Stream -->
+        <div class="telemetry-card">
+          <div class="telemetry-toolbar">
+            <div class="injection-buttons">
+              <button class="btn btn-sm btn-primary" id="toggleSimBtn">
+                <i class="fas fa-pause"></i> Pause Stream
+              </button>
+              <button class="btn btn-sm btn-outline" id="injectScanBtn">
+                <i class="fas fa-crosshairs"></i> Inject Port Scan
+              </button>
+              <button class="btn btn-sm btn-outline" id="injectAdminProbeBtn">
+                <i class="fas fa-user-secret"></i> Inject Admin Probe
+              </button>
+              <button class="btn btn-sm btn-outline" id="injectIoTFloodBtn">
+                <i class="fas fa-wave-square"></i> Inject IoT Flood
+              </button>
+              <button class="btn btn-sm btn-outline" id="injectExamLeakBtn">
+                <i class="fas fa-external-link-alt"></i> Inject Exam Leak
+              </button>
+            </div>
+            
+            <button class="btn btn-sm btn-outline" id="clearLogBtn">
+              <i class="fas fa-trash-alt"></i> Clear
+            </button>
+          </div>
+
+          <div class="telemetry-table-wrapper">
+            <table class="telemetry-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Source IP</th>
+                  <th>VLAN</th>
+                  <th>Destination IP</th>
+                  <th>Port</th>
+                  <th>Bytes</th>
+                  <th>PPS</th>
+                  <th>Risk Score</th>
+                  <th>Verdict</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="flowsTableBody">
+                <!-- Dynamically populated by threat-detection.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Threat Side Panel (Chart & Quarantined IPs) -->
+        <div class="threat-side-panel">
+          <!-- Real-Time Risk Chart -->
+          <div class="chart-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">
+                <i class="fas fa-chart-line" style="color: #38bdf8;"></i> Risk Score Over Time
+              </span>
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">Z-Score Telemetry</span>
+            </div>
+            <canvas id="riskChartCanvas" class="chart-canvas" width="320" height="180"></canvas>
+          </div>
+
+          <!-- Quarantined IPs / Dynamic ACL Blocklist -->
+          <div class="blocked-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">
+                <i class="fas fa-shield-virus" style="color: #f87171;"></i> Quarantined Blocklist
+              </span>
+              <span class="badge" id="blockedBadgeCount" style="font-size: 0.72rem; background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 0.15rem 0.4rem; border-radius: 4px;">0 IPs</span>
+            </div>
+            <div class="blocked-list" id="blockedIpList">
+              <span style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 1rem 0;">No active quarantined IPs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Threat Forensic Inspection Drawer (Appears when suspicious flow is inspected) -->
+      <div id="threatDetailDrawer" style="display: none; margin-top: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-lg);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;">
+          <h4 style="font-size: 1.1rem; color: #f87171; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-shield-alt"></i> Threat Forensic Analysis &amp; Remediation
+          </h4>
+          <button class="btn btn-sm btn-outline" id="closeDrawerBtn">Close</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Plain-English Explanation:</span>
+            <p id="drawerExplanation" style="font-size: 0.92rem; color: var(--text-primary); margin-top: 0.4rem; line-height: 1.6;"></p>
+          </div>
+          <div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Recommended Cisco IOS Dynamic ACL:</span>
+            <pre class="cli-box" id="drawerAclSnippet" style="margin-top: 0.4rem;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: Budget & Scalability -->
+  <section class="section section-alt" id="budget">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fas fa-dollar-sign"></i> Financial &amp; Growth Planning</span>
+        <h2 class="section-title">Budget Allocation &amp; Scalability Roadmap</h2>
+        <p class="section-subtitle">
+          Cost-optimized hardware Bill of Materials (BOM) with an expansion pathway to 10,000+ endpoints.
+        </p>
+      </div>
+
+      <div class="comparison-table-wrapper" style="margin-bottom: 2.5rem;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Equipment / Resource</th>
+              <th>Specification</th>
+              <th>Quantity</th>
+              <th>Unit Cost (USD)</th>
+              <th>Total Cost (USD)</th>
+              <th>Deployment Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cisco Catalyst 3850-24T</strong></td>
+              <td>24-Port Gigabit L3 Core Switch, IP Base</td>
+              <td>2</td>
+              <td>$4,800</td>
+              <td>$9,600</td>
+              <td>Dual-Core HSRP Active-Standby Gateways</td>
+            </tr>
+            <tr>
+              <td><strong>Cisco Catalyst 3850-12X48U</strong></td>
+              <td>10G SFP+ Aggregation Distribution Switch</td>
+              <td>1</td>
+              <td>$6,200</td>
+              <td>$6,200</td>
+              <td>High-Density Distribution Interconnect (SW-Dist)</td>
+            </tr>
+            <tr>
+              <td><strong>Cisco Catalyst 2960-X 48FPS</strong></td>
+              <td>48-Port PoE+ Gigabit Access Switch</td>
+              <td>3</td>
+              <td>$2,400</td>
+              <td>$7,200</td>
+              <td>Building 1, Building 2, &amp; Server Farm Access</td>
+            </tr>
+            <tr>
+              <td><strong>Cisco 2911 ISR / VyOS Appliance</strong></td>
+              <td>Perimeter NAT Router, 3x GE, Security License</td>
+              <td>1</td>
+              <td>$3,500</td>
+              <td>$3,500</td>
+              <td>Edge Router / WAN Border Gateway &amp; Firewall</td>
+            </tr>
+            <tr>
+              <td><strong>Wi-Fi 6 APs (Cisco Catalyst 9115)</strong></td>
+              <td>802.11ax High-Density Campus Access Points</td>
+              <td>24</td>
+              <td>$450</td>
+              <td>$10,800</td>
+              <td>Campus-wide coverage for 5,000 students</td>
+            </tr>
+            <tr>
+              <td><strong>GNS3 &amp; Virtual Lab Environment</strong></td>
+              <td>Open Source GNS3 Server on Linux Bare-Metal</td>
+              <td>1</td>
+              <td>$0</td>
+              <td>$0</td>
+              <td>Zero-cost simulation &amp; automated test validation</td>
+            </tr>
+            <tr style="background: rgba(56, 189, 248, 0.08); font-weight: 700;">
+              <td colspan="4" style="text-align: right; color: var(--text-primary);">Total Infrastructure Investment:</td>
+              <td colspan="2" style="color: #38bdf8; font-size: 1.1rem; font-family: var(--font-mono);">$37,300 USD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 11: AI Campus Assistant (Chat Box) -->
+  <section class="section" id="ai-assistant">
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header">
+        <span class="section-tag" style="color: #c084fc;"><i class="fas fa-robot"></i> Interactive Assistant</span>
+        <h2 class="section-title">Campus Network AI Assistant</h2>
+        <p class="section-subtitle">
+          Ask any question about this project's VLAN architecture, HSRP failover, Cisco ACL security rules, or verification commands.
+        </p>
+      </div>
+
+      <div class="chat-container-card">
+        <div class="chat-header-bar">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399;"></div>
+            <strong style="font-size: 0.95rem;">Campus Net AI Assistant</strong>
+            <span class="badge" style="font-size: 0.7rem; background: rgba(168, 85, 247, 0.15); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px;">Backend Gateway</span>
+          </div>
+          <button class="btn btn-sm btn-outline" id="clearChatBtn">
+            <i class="fas fa-eraser"></i> Clear Chat
+          </button>
+        </div>
+
+        <div class="chat-messages-box" id="chatMessages">
+          <div class="chat-bubble chat-bubble-assistant">
+            Hello! I am the <strong>Smart Campus Network Assistant</strong>. Ask me anything about our 5,000-student network redesign! 
+            <br><br>
+            <em>Try asking:</em>
+            <ul style="margin-top: 0.4rem; margin-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary);">
+              <li>"What is the subnet and gateway for Student Wi-Fi?"</li>
+              <li>"Why is CCTV blocked from the internet?"</li>
+              <li>"How does Core1 and Core2 HSRP failover work?"</li>
+              <li>"Show me the Cisco ACL configuration for Online Exams."</li>
+            </ul>
+          </div>
+        </div>
+
+        <form class="chat-input-area" id="chatForm">
+          <input type="text" class="chat-input-field" id="chatInput" placeholder="Type a question about the campus network..." autocomplete="off">
+          <button type="submit" class="btn btn-primary" id="chatSendBtn">
+            <i class="fas fa-paper-plane"></i> Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom: 0.5rem;">
+            <div class="brand-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <span>SMART CAMPUS <span style="color: var(--color-primary-light);">NET</span></span>
+          </div>
+          <p>
+            An enterprise-grade campus network engineering redesign for 5,000 students. Validated end-to-end with GNS3 emulation, Cisco IOS multilayer switching, and autonomous AI threat detection.
+          </p>
+          <div class="tech-badges">
+            <span class="tech-pill">GNS3 Server</span>
+            <span class="tech-pill">Cisco IOS</span>
+            <span class="tech-pill">802.1Q VLANs</span>
+            <span class="tech-pill">HSRP / VRRP</span>
+            <span class="tech-pill">OSPF Area 0</span>
+            <span class="tech-pill">Layer 3/4 ACLs</span>
+            <span class="tech-pill">PAT / NAT</span>
+            <span class="tech-pill">Python Flask</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Overview</a></li>
+            <li><a href="#topology">Interactive Topology</a></li>
+            <li><a href="#live-status">Live Lab Status</a></li>
+            <li><a href="#vlans">VLANs &amp; Subnets</a></li>
+            <li><a href="#security">Security ACLs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Engineering</h4>
+          <ul class="footer-links">
+            <li><a href="#redundancy">High Availability (HSRP)</a></li>
+            <li><a href="#verification">Verification Procedures</a></li>
+            <li><a href="#ai-threat-detection">AI Threat Telemetry</a></li>
+            <li><a href="#ai-assistant">Campus AI Assistant</a></li>
+            <li><a href="#budget">Budget &amp; Scalability</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">GNS3 Resources</h4>
+          <ul class="footer-links">
+            <li><a href="SmartCampus_Full.gns3project" download><i class="fas fa-download"></i> Download .gns3project</a></li>
+            <li><a href="https://www.gns3.com" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Official GNS3 Site</a></li>
+            <li><a href="/api/health" target="_blank"><i class="fas fa-heartbeat"></i> Backend API Health</a></li>
+            <li><a href="#live-status"><i class="fas fa-sliders-h"></i> Live Node Control</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Smart Digital Campus Network Project Team &bull; Computer Networks Capstone
+        </div>
+        <div>
+          Engineered for 5,000 Students &bull; High Availability &bull; Zero-Trust Security
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Application -->
+  <script src="gns3-api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

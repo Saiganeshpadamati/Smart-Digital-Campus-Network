@@ -1,0 +1,323 @@
+{
+  "auto_close": true,
+  "auto_open": false,
+  "auto_start": false,
+  "drawing_grid_size": 25,
+  "grid_size": 75,
+  "name": "SmartCampus_Full",
+  "project_id": "c1f7b8a2-9e3d-4c55-8a12-98e6b12a3456",
+  "revision": 9,
+  "scene_height": 1000,
+  "scene_width": 2000,
+  "show_grid": false,
+  "show_interface_labels": true,
+  "show_layers": false,
+  "snap_to_grid": false,
+  "supplier": null,
+  "topology": {
+    "computes": [],
+    "drawings": [
+      {
+        "drawing_id": "d1-wan",
+        "x": 650,
+        "y": 40,
+        "z": 0,
+        "svg": "<text font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#38bdf8\">WAN / Internet Gateway (203.0.113.1)</text>"
+      },
+      {
+        "drawing_id": "d2-core",
+        "x": 580,
+        "y": 280,
+        "z": 0,
+        "svg": "<text font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#60a5fa\">HSRP Active-Standby Core Layer (OSPF Area 0)</text>"
+      }
+    ],
+    "links": [
+      {
+        "link_id": "link-wan-edge",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-internet", "port_number": 0},
+          {"adapter_number": 0, "node_id": "node-edge", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-edge-core1",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-edge", "port_number": 1},
+          {"adapter_number": 0, "node_id": "node-core1", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-edge-core2",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-edge", "port_number": 2},
+          {"adapter_number": 0, "node_id": "node-core2", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-core1-core2",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-core1", "port_number": 1},
+          {"adapter_number": 0, "node_id": "node-core2", "port_number": 1}
+        ]
+      },
+      {
+        "link_id": "link-core1-dist",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-core1", "port_number": 2},
+          {"adapter_number": 0, "node_id": "node-dist", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-core2-dist",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-core2", "port_number": 2},
+          {"adapter_number": 0, "node_id": "node-dist", "port_number": 1}
+        ]
+      },
+      {
+        "link_id": "link-dist-bldg1",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-dist", "port_number": 2},
+          {"adapter_number": 0, "node_id": "node-bldg1", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-dist-bldg2",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-dist", "port_number": 3},
+          {"adapter_number": 0, "node_id": "node-bldg2", "port_number": 0}
+        ]
+      },
+      {
+        "link_id": "link-dist-servers",
+        "nodes": [
+          {"adapter_number": 0, "node_id": "node-dist", "port_number": 4},
+          {"adapter_number": 0, "node_id": "node-servers", "port_number": 0}
+        ]
+      }
+    ],
+    "nodes": [
+      {
+        "compute_id": "local",
+        "console": 5000,
+        "console_type": "telnet",
+        "name": "Internet-Cloud",
+        "node_id": "node-internet",
+        "node_type": "cloud",
+        "status": "started",
+        "x": 800,
+        "y": 60,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5001,
+        "console_type": "telnet",
+        "name": "Edge-Router",
+        "node_id": "node-edge",
+        "node_type": "dynamips",
+        "status": "started",
+        "x": 800,
+        "y": 180,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5002,
+        "console_type": "telnet",
+        "name": "Core1-Router",
+        "node_id": "node-core1",
+        "node_type": "iou",
+        "status": "started",
+        "x": 620,
+        "y": 320,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5003,
+        "console_type": "telnet",
+        "name": "Core2-Router",
+        "node_id": "node-core2",
+        "node_type": "iou",
+        "status": "started",
+        "x": 980,
+        "y": 320,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5004,
+        "console_type": "telnet",
+        "name": "SW-Dist",
+        "node_id": "node-dist",
+        "node_type": "iou",
+        "status": "started",
+        "x": 800,
+        "y": 480,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5005,
+        "console_type": "telnet",
+        "name": "SW-Bldg1",
+        "node_id": "node-bldg1",
+        "node_type": "iou",
+        "status": "started",
+        "x": 480,
+        "y": 640,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5006,
+        "console_type": "telnet",
+        "name": "SW-Bldg2",
+        "node_id": "node-bldg2",
+        "node_type": "iou",
+        "status": "started",
+        "x": 800,
+        "y": 640,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5007,
+        "console_type": "telnet",
+        "name": "SW-Servers",
+        "node_id": "node-servers",
+        "node_type": "iou",
+        "status": "started",
+        "x": 1120,
+        "y": 640,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5008,
+        "console_type": "telnet",
+        "name": "PC-Academic",
+        "node_id": "node-academic-pc",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 420,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5009,
+        "console_type": "telnet",
+        "name": "PC-Admin",
+        "node_id": "node-admin-pc",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 540,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5010,
+        "console_type": "telnet",
+        "name": "PC-Student",
+        "node_id": "node-student-pc",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 730,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5011,
+        "console_type": "telnet",
+        "name": "IoT-Sensor",
+        "node_id": "node-iot-sensor",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 810,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5012,
+        "console_type": "telnet",
+        "name": "CCTV-AI",
+        "node_id": "node-cctv-camera",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 890,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5013,
+        "console_type": "telnet",
+        "name": "PC-Exam",
+        "node_id": "node-exam-pc",
+        "node_type": "vpcs",
+        "status": "started",
+        "x": 1050,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5014,
+        "console_type": "telnet",
+        "name": "Server-Web",
+        "node_id": "node-server-web",
+        "node_type": "docker",
+        "status": "started",
+        "x": 1130,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5015,
+        "console_type": "telnet",
+        "name": "Server-ERP",
+        "node_id": "node-server-erp",
+        "node_type": "docker",
+        "status": "started",
+        "x": 1210,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5016,
+        "console_type": "telnet",
+        "name": "Server-Exam",
+        "node_id": "node-server-exam",
+        "node_type": "docker",
+        "status": "started",
+        "x": 1290,
+        "y": 800,
+        "z": 1
+      },
+      {
+        "compute_id": "local",
+        "console": 5017,
+        "console_type": "telnet",
+        "name": "Server-NVR",
+        "node_id": "node-server-nvr",
+        "node_type": "docker",
+        "status": "started",
+        "x": 1370,
+        "y": 800,
+        "z": 1
+      }
+    ]
+  },
+  "type": "topology",
+  "variables": null,
+  "version": "2.2.45",
+  "zoom": 100
+}
